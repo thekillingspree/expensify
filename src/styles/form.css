@@ -1,0 +1,32 @@
+form {
+    margin-top: 30px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 3px 13px 2px #29292961;
+}
+
+input[type="submit"] {
+    width: 200px;
+    border: none;
+    background-color: #c0392b;
+    padding: 10px 10px;
+    margin: 20px 0;
+    align-self: center;
+    border-radius: 4px;
+    color: #fff;
+    outline: none;
+    box-shadow: 0 3px 13px 2px #a910107d;
+    transition: 0.2s all ease-in-out;
+}
+
+input[type="submit"]:hover {
+    cursor: pointer;
+    box-shadow: 0 6px 13px 2px #a910107d;
+}
+
+input[type="submit"]:active {
+    box-shadow: 0 1px 4px 0px #a910107d;
+}

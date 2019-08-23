@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from '../components/Home';
-import About from '../components/About';
-import Login from '../components/Login';
+import Home from '../screens/Home';
+import About from '../screens/About';
+import SignUp from '../screens/SignUp';
 
 class AppRouter extends Component {
     render() {
@@ -11,7 +11,7 @@ class AppRouter extends Component {
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/about" component={About} />
-                    <Route path="/Login" component={Login} />
+                    <Route path="/signup" component={SignUp} />
                 </Switch>
             </Router>
         );

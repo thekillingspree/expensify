@@ -1,0 +1,21 @@
+.auth-form {
+    background: #c0392b;
+    height: 100vh;
+    padding: 0 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-form h1,
+.auth-form p {
+    color: #fff;
+}
+
+.auth-input {
+    margin: 20px 0px !important;
+}
+
+label.Mui-focused {
+    font-weight: 800 !important;
+}
