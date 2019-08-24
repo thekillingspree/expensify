@@ -7,10 +7,17 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import FormControl from '@material-ui/core/FormControl';
-
+import ErrorSnackbar from '../components/ErrorSnackbar';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { connect } from 'react-redux';
+import { signUpCall } from '../actions';
 
 class SignUp extends Component {
-
 
     state = {
         fname: '',
@@ -19,6 +26,7 @@ class SignUp extends Component {
         currency: '',
         password: '',
         error: null,
+        loading: false
     }
 
     onChange = event => {
@@ -28,16 +36,46 @@ class SignUp extends Component {
         this.setState({[name]: value});
     }
 
-    formSubmit = event => {
+    formSubmit = async event => {
         event.preventDefault(); 
-        console.log('form submitted.');
-        const {fname, lname, email, currency, password, error} = this.state;
+        const {fname, lname, email, currency, password} = this.state;
+        const name = fname + ' ' + lname;
+        if (password.length < 6) {
+            return this.setState({error: 'Password must be at least 6 characters long.'});
+        }
+        if (!currency) {
+            return this.setState({error: 'Please select currency.'});
+        }
+        this.setState({loading: true});
+        const { error } = await this.props.signUpCall({name, email, currency, password});
+        if (error) {
+            if (error.code === 11000) {
+                this.setState({error: 'This email is already associated with an account. Please Login.'});
+            } else if (error.errors.email) {
+                this.setState({error: 'Please provide a valid email.'});
+            }
+        }
+        this.setState({loading: false});
+    }
+
+    onCloseSnackbar = () => {
+        this.setState({error: ''});
     }
 
     render() {
-        const {fname, currency, lname, email, password, error} = this.state;
+        const {fname, currency, lname, email, password, error, loading} = this.state;
         return (
             <div className="auth-form">
+                <Dialog open={loading}>
+                    <DialogTitle>Signing Up</DialogTitle>
+                    <DialogContent>
+                        <DialogActions>
+                            <CircularProgress style={{marginRight: 20, marginBottom: 10}} size={40}/>
+                            <DialogContentText>Please wait</DialogContentText>
+                        </DialogActions>
+                    </DialogContent>
+                </Dialog>
+                <ErrorSnackbar open={!!error} message={error} onClose={this.onCloseSnackbar} />
                 <h1>Sign Up</h1>
                 <p>Please enter your information</p>
                 <form onSubmit={this.formSubmit}>
@@ -68,4 +106,4 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+export default connect(null, {signUpCall})(SignUp);

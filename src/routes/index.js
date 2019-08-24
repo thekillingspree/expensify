@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from '../screens/Home';
 import About from '../screens/About';
 import SignUp from '../screens/SignUp';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+import Dashboard from '../screens/Dashboard';
 
 class AppRouter extends Component {
     render() {
@@ -11,7 +14,8 @@ class AppRouter extends Component {
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/about" component={About} />
-                    <Route path="/signup" component={SignUp} />
+                    <PublicRoute path="/signup" component={SignUp} />
+                    <PrivateRoute path="/dashboard" component={Dashboard} />
                 </Switch>
             </Router>
         );
