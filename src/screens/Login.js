@@ -93,7 +93,7 @@ class Login extends Component {
                 <ErrorSnackbar open={!!error} message={error} onClose={this.onCloseSnackbar} />
                 <h1>Login</h1>
                 <form onSubmit={this.formSubmit}>
-                    <FormControl className="auth-input" variant="outlined" onBlur={this.setBlur} error={email.length > 0 && !checkEmail(email)}>
+                    <FormControl className="auth-input helper" variant="outlined" onBlur={this.setBlur} error={email.length > 0 && !checkEmail(email)}>
                         <InputLabel ref={this.emailLabel} htmlFor="email">Email</InputLabel>
                         <OutlinedInput
                         type="email" 
@@ -106,7 +106,7 @@ class Login extends Component {
                         />
                         <FormHelperText>Please Provide a Valid Email</FormHelperText>
                     </FormControl>
-                    <FormControl className="auth-input" variant="outlined" onBlur={this.setBlur} error={password.length > 0 && password.length < 6}>
+                    <FormControl className="auth-input helper" variant="outlined" onBlur={this.setBlur} error={password.length > 0 && password.length < 6}>
                         <InputLabel ref={this.passwordLabel} htmlFor="password">Password</InputLabel>
                         <OutlinedInput
                         type="password" 

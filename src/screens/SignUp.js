@@ -101,7 +101,7 @@ class SignUp extends Component {
                     <TextField className="auth-input" variant="outlined" name="fname" id="fname" value={fname} required label="First Name" placeholder="Eg. Sam" onChange={this.onChange}/>
                     <TextField className="auth-input" variant="outlined" name="lname" id="lname" value={lname} required label="Last Name" placeholder="Eg. Smith" onChange={this.onChange}/>
                     
-                    <FormControl className="auth-input" variant="outlined" error={email.length > 0 && !checkEmail(email)}>
+                    <FormControl className="auth-input helper" variant="outlined" error={email.length > 0 && !checkEmail(email)}>
                         <InputLabel ref={this.emailLabel} htmlFor="email">Email *</InputLabel>
                         <OutlinedInput
                         type="email" 
@@ -114,7 +114,7 @@ class SignUp extends Component {
                         />
                         <FormHelperText>Please Provide a Valid Email</FormHelperText>
                     </FormControl>
-                    <FormControl className="auth-input" variant="outlined" onBlur={this.setBlur} error={password.length > 0 && password.length < 6}>
+                    <FormControl className="auth-input helper" variant="outlined" onBlur={this.setBlur} error={password.length > 0 && password.length < 6}>
                         <InputLabel ref={this.passwordLabel} htmlFor="password">Password *</InputLabel>
                         <OutlinedInput
                         type="password" 
@@ -129,7 +129,7 @@ class SignUp extends Component {
                     </FormControl>
 
 
-                    <FormControl variant="outlined" className="auth-input" error={!!cerror}>
+                    <FormControl variant="outlined" className="auth-input helper" error={!!cerror}>
                         <InputLabel htmlFor="outlined-age-simple">
                             Currency *
                         </InputLabel>

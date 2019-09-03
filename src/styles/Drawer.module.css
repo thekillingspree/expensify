@@ -1,0 +1,17 @@
+.banner {
+    height: 100px;
+    background: #c0392b;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.username,
+.email {
+    color: #fff;
+}
+
+.email {
+    font-size: 0.8rem;
+}
