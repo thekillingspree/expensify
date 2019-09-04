@@ -1,21 +1,31 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ErrorIcon from '@material-ui/icons/Error';
+import InfoIcon from '@material-ui/icons/Info';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import CloseIcon from '@material-ui/icons/Close';
+import styles from '../styles/Snack.module.scss';
 
+
+const variantIcons = {
+    success: CheckCircleIcon,
+    error: ErrorIcon,
+    info: InfoIcon
+}
 
 const SnackbarContentWrapper = props => {
     
-    const {message, onClose, ...others} = props; 
-    
+    const {message, onClose, variant="info", ...others} = props; 
+    const Icon = variantIcons[variant];
     return (
     <SnackbarContent 
-        backgroundColor="#c0392b"
+        className={styles[variant]}
         message={
             <span style={{display: 'flex', alignItems: 'center'}}>
-                <ErrorIcon style={{marginRight: 10}}/>
+                <Icon style={{marginRight: 10}}/>
                 {props.message}
             </span>
         }
@@ -28,7 +38,7 @@ const SnackbarContentWrapper = props => {
     />);
 }
 
-class ErrorSnackbar extends Component {
+class Snack extends Component {
     render() {
         return (
             <Snackbar
@@ -36,10 +46,17 @@ class ErrorSnackbar extends Component {
                 autoHideDuration={6000}
                 onClose={this.props.onClose}
                 anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}>
-                <SnackbarContentWrapper message={this.props.message} onClose={this.props.onClose} />
+                <SnackbarContentWrapper  variant={this.props.variant} message={this.props.message} onClose={this.props.onClose} />
             </Snackbar>
         )
     }
 }
 
-export default ErrorSnackbar
+Snack.propTypes = {
+    open: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    message: PropTypes.string.isRequired,
+    variant: PropTypes.oneOf(['error', 'success', 'info'])
+}
+
+export default Snack
