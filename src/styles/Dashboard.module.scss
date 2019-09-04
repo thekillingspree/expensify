@@ -1,5 +1,8 @@
 @import './vars.scss';
 
+.greet {
+    font-size: 2rem;
+}
 
 .info {
     background-color: #f1c40f;
@@ -23,15 +26,24 @@
 
 .balanceCard {
     margin: 30px 0;
-    p {
-        font-size: 4rem;
-        font-weight: bold;
-    }
-    .neg {
-        color: $primary;
+    h1 {
+        font-size: 2rem;
+        font-weight: normal;
     }
 
-    .pos {
-        color: $success;
+    .types {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+        flex-wrap: wrap;
+        div {
+            margin-right: 30px
+        }
+        h2 {
+            font-size: 1rem;
+        }
+        p {
+            font-size: 1.5rem;
+        }
     }
 }

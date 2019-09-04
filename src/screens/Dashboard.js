@@ -10,9 +10,10 @@ import styles from '../styles/Dashboard.module.scss';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import { greet, displayAmount, resendMail } from '../utils';
-import { updateProfile } from '../actions/user';
+import { updateProfile, getExpenses } from '../actions';
 import LoadingDialog from '../components/LoadingDialog';
 import Snackbar from '../components/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Dashboard extends Component {
 
@@ -20,17 +21,30 @@ class Dashboard extends Component {
         sendingEmail: false,
         sendingFailed: false,
         emailResult: '',
-        emailSent: false
+        emailSent: false,
+        loaded: false,
+        income: 0,
+        expense: 0
     }
 
     constructor (props) {
         super(props);
-
         this.sendMail = this.sendMail.bind(this);
     }
 
-    componentDidMount() {
-        this.props.updateProfile();
+    async componentDidMount() {
+        await this.props.updateProfile();
+        await this.props.getExpenses();
+        let income = 0, expense = 0;
+        this.props.expenses.forEach(ex => {
+            if (ex.type === 'expense') {
+                expense += ex.value
+            } else {
+                income += ex.value;
+            }
+        })
+        this.setState({loaded: true, income, expense});
+        
     }
 
     async sendMail() {
@@ -51,7 +65,13 @@ class Dashboard extends Component {
 
     render() {
         const {history, user} = this.props;
-        const {sendingEmail, sendingFailed, emailResult, emailSent} = this.state;
+        const {sendingEmail, 
+            sendingFailed, 
+            emailResult,
+            emailSent, 
+            income, 
+            expense,
+            loaded} = this.state;
         return (
             <div>
                 <AppBar title="Dashboard" />
@@ -67,7 +87,12 @@ class Dashboard extends Component {
                         <AddIcon />
                     </Fab>
                 </Tooltip>
-                <Container className="container">
+                {!loaded &&
+                    <div style={{width: '100%', height: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <CircularProgress style={{marginRight: 20, marginBottom: 10}} size={60}/>
+                    </div>
+                }
+                {loaded && <Container className="container">
                     {!user.isVerified &&
                         <div className={styles.info}>
                             <InfoIcon className={styles.warnIcon}/>
@@ -80,19 +105,29 @@ class Dashboard extends Component {
                             </div>
                         </div>
                     }
-                    <h1>{greet()} {user.name}</h1>
+                    
                     <div className={styles.balanceCard}>
-                        <h2>Current Balance</h2>
-                        <p className={user.balance > 0 ? styles.pos: styles.neg}>{displayAmount(user.currency, user.balance)}</p>
+                        <h2>Balance</h2>
+                        <h1 className={user.balance >= 0 ? "pos": "neg"}>{displayAmount(user.currency, user.balance)}</h1>
+                        <div className={styles.types}>
+                            <div>
+                                <h2>Income</h2>
+                                <p className="pos">{displayAmount(user.currency, income)}</p>
+                            </div>
+                            <div>
+                                <h2>Expenses</h2>
+                                <p className="neg">{displayAmount(user.currency, expense)}</p>
+                            </div>
+                        </div>
                     </div>
-                </Container>
+                </Container>}
             </div>
         )
     }
 }
 
-const mapStateToProps = ({user}) => {
-    return {user}
+const mapStateToProps = ({user, expenses}) => {
+    return {user, expenses}
 }
 
-export default withRouter(connect(mapStateToProps, {updateProfile})(Dashboard));
+export default withRouter(connect(mapStateToProps, {updateProfile, getExpenses})(Dashboard));
