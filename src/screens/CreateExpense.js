@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AppBar from '../components/Appbar';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Check';
-import styles from '../styles/CreateExpense.module.css';
+import styles from '../styles/CreateExpense.module.scss';
 
 class CreateExpense extends Component {
     render() {

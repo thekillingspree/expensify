@@ -1,4 +1,4 @@
-import { SIGN_UP, LOGOUT, DEF_USER, LOGIN } from "../constants";
+import { SIGN_UP, LOGOUT, DEF_USER, LOGIN, SET_PROFILE } from "../constants";
 
 export default (state={}, action) => {
     switch(action.type) {
@@ -8,6 +8,8 @@ export default (state={}, action) => {
             return action.user;
         case LOGOUT:
             return DEF_USER;
+        case SET_PROFILE: 
+            return {...state, ...action.user};
         default:
             return state; 
     }

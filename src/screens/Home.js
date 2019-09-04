@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/home.css';
+import '../styles/home.scss';
 import { Link } from 'react-router-dom';
 import bg from '../img/budget.jpg';
 class Home extends Component {

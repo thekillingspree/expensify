@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/App.css';
+import './styles/App.scss';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, {persistor} from './store';

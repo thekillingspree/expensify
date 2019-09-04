@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,7 +11,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import styles from '../styles/AppBar.module.css';
+import styles from '../styles/AppBar.module.scss';
 import Drawer from './Drawer';
 
 class Appbar extends Component {
@@ -37,7 +38,7 @@ class Appbar extends Component {
         return (
             <div>
                 <Drawer open={drawerOpen} onOpen={this.handleDrawerOpen} onClose={this.handleDrawerClose}/>
-                <AppBar>
+                <AppBar position="sticky">
                     <Toolbar>
                         <IconButton edge="start" className={styles.menuIcon} onClick={this.handleDrawerOpen} color="inherit" aria-label="menu">
                             <MenuIcon />
@@ -48,6 +49,10 @@ class Appbar extends Component {
             </div>
         )
     }
+}
+
+Appbar.propTypes = {
+    title: PropTypes.string.isRequired
 }
 
 const mapStateToProps = ({user}) => {
