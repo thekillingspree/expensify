@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
-import '../styles/form.css';
-import '../styles/auth.css';
+import '../styles/form.scss';
+import '../styles/auth.scss';
 import TextField from '@material-ui/core/TextField';
-import ErrorSnackbar from '../components/ErrorSnackbar';
+import Snackbar from '../components/Snackbar';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle'
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux';
 import { authCall } from '../actions';
 import { checkEmail } from '../utils';
+import LoadingDialog from '../components/LoadingDialog';
 
 class Login extends Component {
 
@@ -81,16 +76,12 @@ class Login extends Component {
         const {email, password, error, loading, emailWidth, passWidth, blur} = this.state;
         return (
             <div className="auth-form">
-                <Dialog open={loading}>
-                    <DialogTitle>Logging In</DialogTitle>
-                    <DialogContent>
-                        <DialogActions>
-                            <CircularProgress style={{marginRight: 20, marginBottom: 10}} size={40}/>
-                            <DialogContentText>Please wait</DialogContentText>
-                        </DialogActions>
-                    </DialogContent>
-                </Dialog>
-                <ErrorSnackbar open={!!error} message={error} onClose={this.onCloseSnackbar} />
+                <LoadingDialog open={loading} title="Logging In" msg="Please Wait" />
+                <Snackbar 
+                open={!!error} 
+                message={error} 
+                variant="info"
+                onClose={this.onCloseSnackbar} />
                 <h1>Login</h1>
                 <form onSubmit={this.formSubmit}>
                     <FormControl className="auth-input helper" variant="outlined" onBlur={this.setBlur} error={email.length > 0 && !checkEmail(email)}>

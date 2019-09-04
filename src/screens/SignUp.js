@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import '../styles/form.css';
-import '../styles/auth.css';
+import '../styles/form.scss';
+import '../styles/auth.scss';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -8,16 +8,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import ErrorSnackbar from '../components/ErrorSnackbar';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '../components/Snackbar';
 import { connect } from 'react-redux';
 import { authCall } from '../actions';
 import { checkEmail } from '../utils';
+import LoadingDialog from '../components/LoadingDialog';
 
 class SignUp extends Component {
 
@@ -85,16 +80,12 @@ class SignUp extends Component {
         const {fname, currency, lname, email, password, error, cerror, loading, emailWidth, passWidth} = this.state;
         return (
             <div className="auth-form">
-                <Dialog open={loading}>
-                    <DialogTitle>Signing Up</DialogTitle>
-                    <DialogContent>
-                        <DialogActions>
-                            <CircularProgress style={{marginRight: 20, marginBottom: 10}} size={40}/>
-                            <DialogContentText>Please wait</DialogContentText>
-                        </DialogActions>
-                    </DialogContent>
-                </Dialog>
-                <ErrorSnackbar open={!!error} message={error} onClose={this.onCloseSnackbar} />
+                <LoadingDialog open={loading} title="Signing Up" msg="Please Wait" />
+                <Snackbar 
+                open={!!error} 
+                message={error}
+                variant="info" 
+                onClose={this.onCloseSnackbar} />
                 <h1>Sign Up</h1>
                 <p>Please enter your information</p>
                 <form onSubmit={this.formSubmit}>
