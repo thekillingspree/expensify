@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export * from './api';
 
 export const checkEmail = email => {
@@ -21,4 +23,23 @@ export const curToSymbol = currency => {
         default: 
             return '₹'
     }
+}
+
+export const greet = () => {
+    const hour = parseInt(moment().format('H'));
+    if (hour < 12) {
+        return 'Good Morning,'
+    } else if (hour >= 12 && hour < 16) {
+        return 'Good Afternoon,'
+    } else {
+        return 'Good Evening,'
+    }
+}
+
+export const displayAmount = (curr, amount) => {
+    let str = `${curToSymbol(curr)} ${Math.abs(amount).toFixed(2)}`;
+    if (amount < 0) {
+        return `-${str}`;
+    }
+    return str
 }
