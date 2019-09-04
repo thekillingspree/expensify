@@ -1,0 +1,37 @@
+@import './vars.scss';
+
+
+.info {
+    background-color: #f1c40f;
+    padding: 20px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    color: rgb(54, 54, 54);
+    box-shadow: 0 2px 6px #f1c40fbf;
+}
+
+.warnMessage {
+    flex-grow: 1;
+}
+
+.warnIcon {
+    margin-right: 20px;
+}
+
+.balanceCard {
+    margin: 30px 0;
+    p {
+        font-size: 4rem;
+        font-weight: bold;
+    }
+    .neg {
+        color: $primary;
+    }
+
+    .pos {
+        color: $success;
+    }
+}

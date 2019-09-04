@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
-
 * {
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -37,4 +36,8 @@ a {
 
 .fab.success {
     background: #27ae60 !important;
+}
+
+.container {
+    margin-top: 2rem;
 }
