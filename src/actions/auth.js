@@ -16,10 +16,20 @@ const authError = error => ({
     error
 });
 
-export const logout = () => {
-    axios.defaults.headers['Authorization'] = null;
+
+export const logoutRedux = () => {
     return {
         type: LOGOUT
+    }
+}
+export const logout = () => {
+    return async dispatch => {
+        try {
+            await axios.post('/users/logout');
+            dispatch(logoutRedux());
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
@@ -28,7 +38,6 @@ export const authCall = (user, type) => {
         try {
             const {data} = await axios.post(`/users/${type}`, user);
             const userData = {...data.user, token: data.token};
-            axios.defaults.headers['Authorization'] = data.token;
             if (type === 'signup') {
                 return dispatch(signUp(userData));
             }
