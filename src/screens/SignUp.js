@@ -121,7 +121,7 @@ class SignUp extends Component {
 
 
                     <FormControl variant="outlined" className="auth-input helper" error={!!cerror}>
-                        <InputLabel htmlFor="outlined-age-simple">
+                        <InputLabel>
                             Currency *
                         </InputLabel>
                         <Select

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/form.scss';
 import '../styles/auth.scss';
-import TextField from '@material-ui/core/TextField';
 import Snackbar from '../components/Snackbar';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -73,7 +72,7 @@ class Login extends Component {
     }
 
     render() {
-        const {email, password, error, loading, emailWidth, passWidth, blur} = this.state;
+        const {email, password, error, loading, emailWidth, passWidth} = this.state;
         return (
             <div className="auth-form">
                 <LoadingDialog open={loading} title="Logging In" msg="Please Wait" />

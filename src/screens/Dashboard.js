@@ -9,7 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import styles from '../styles/Dashboard.module.scss';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import { greet, displayAmount, resendMail } from '../utils';
+import { displayAmount, resendMail } from '../utils';
 import { updateProfile, getExpenses } from '../actions';
 import LoadingDialog from '../components/LoadingDialog';
 import Snackbar from '../components/Snackbar';
@@ -24,7 +24,8 @@ class Dashboard extends Component {
         emailSent: false,
         loaded: false,
         income: 0,
-        expense: 0
+        expense: 0,
+        created: false
     }
 
     constructor (props) {
@@ -71,9 +72,10 @@ class Dashboard extends Component {
             emailSent, 
             income, 
             expense,
+            created,
             loaded} = this.state;
         return (
-            <div>
+            <div className="container">
                 <AppBar title="Dashboard" />
                 <LoadingDialog open={sendingEmail} title="Sending Email"/>
                 <Snackbar 
@@ -81,6 +83,12 @@ class Dashboard extends Component {
                 variant={emailSent ? "success": "error"}
                 message={emailResult}
                 onClose={this.onSnackbarClose}
+                />
+                <Snackbar 
+                open={created}
+                variant={"success"}
+                message={`Added successfully.`}
+                onClose={() => this.setState({created: false})}
                 />
                 <Tooltip title="Add Expense">
                     <Fab color="primary" className="fab"  onClick={() => history.push('/create')}>
@@ -92,7 +100,7 @@ class Dashboard extends Component {
                     <CircularProgress style={{marginRight: 20, marginBottom: 10}} size={60}/>
                     </div>
                 }
-                {loaded && <Container className="container">
+                {loaded && <Container className={styles.main}>
                     {!user.isVerified &&
                         <div className={styles.info}>
                             <InfoIcon className={styles.warnIcon}/>

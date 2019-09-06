@@ -43,3 +43,14 @@ export const displayAmount = (curr, amount) => {
     }
     return str
 }
+
+
+export const randomPlaceholder = type => {
+    const income = ['Salary Bonus', 'Cashback', 'Savings', 'Gifts', 'Refunds'];
+    const expense = ['Bill Payment', 'Train Pass', 'Subscriptions', 'Installments', 'Movie Tickets'];
+
+    const obj = {income, expense};
+
+    return obj[type][Math.floor(Math.random() * 5)]
+
+}

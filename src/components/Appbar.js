@@ -5,12 +5,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import PaletteIcon from '@material-ui/icons/Palette';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import styles from '../styles/AppBar.module.scss';
 import Drawer from './Drawer';
 
@@ -33,12 +27,12 @@ class Appbar extends Component {
     }
 
     render() {
-        const {user, title} = this.props;
+        const { title} = this.props;
         const {drawerOpen} = this.state;
         return (
             <div>
                 <Drawer open={drawerOpen} onOpen={this.handleDrawerOpen} onClose={this.handleDrawerClose}/>
-                <AppBar position="sticky">
+                <AppBar style={{zIndex: 11}} position="fixed">
                     <Toolbar>
                         <IconButton edge="start" className={styles.menuIcon} onClick={this.handleDrawerOpen} color="inherit" aria-label="menu">
                             <MenuIcon />

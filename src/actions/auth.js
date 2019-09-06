@@ -1,5 +1,5 @@
 import axios from '../utils/axios';
-import { API, SIGN_UP, AUTH_ERROR, LOGIN, LOGOUT } from '../constants';
+import { SIGN_UP, AUTH_ERROR, LOGIN, LOGOUT } from '../constants';
 
 const signUp = user => ({
     type: SIGN_UP,
@@ -29,6 +29,7 @@ export const logout = () => {
             dispatch(logoutRedux());
         } catch (error) {
             console.log(error);
+            dispatch(authError(error.response.data))
         }
     }
 }

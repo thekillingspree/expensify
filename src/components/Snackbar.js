@@ -4,7 +4,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar';
+import Snack from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import CloseIcon from '@material-ui/icons/Close';
 import styles from '../styles/Snack.module.scss';
@@ -38,25 +38,25 @@ const SnackbarContentWrapper = props => {
     />);
 }
 
-class Snack extends Component {
+class Snackbar extends Component {
     render() {
         return (
-            <Snackbar
+            <Snack
                 open={this.props.open}
                 autoHideDuration={6000}
                 onClose={this.props.onClose}
                 anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}>
                 <SnackbarContentWrapper  variant={this.props.variant} message={this.props.message} onClose={this.props.onClose} />
-            </Snackbar>
+            </Snack>
         )
     }
 }
 
-Snack.propTypes = {
+Snackbar.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     message: PropTypes.string.isRequired,
     variant: PropTypes.oneOf(['error', 'success', 'info'])
 }
 
-export default Snack
+export default Snackbar

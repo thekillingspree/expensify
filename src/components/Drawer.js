@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import { logout } from '../actions/auth';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import ListIcon from '@material-ui/icons/List';
@@ -22,6 +23,10 @@ class Drawer extends Component {
         loggingOut: false
     }
 
+    openPage = path => {
+        this.props.history.push(path)
+    }
+
     render() {
         const {open, onClose, user, onOpen} = this.props;
         const {loggingOut} = this.state;
@@ -33,20 +38,20 @@ class Drawer extends Component {
                     <p className={styles.email}>{user.email}</p>
                 </div>
                 <List style={{width: 250}}>
-                    <ListItem button>
+                    <ListItem button onClick={() => this.openPage('/dashboard')}>
                         <ListItemIcon>
                             <DashboardIcon />
                         </ListItemIcon>
                         <ListItemText>Dashboard</ListItemText>
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button onClick={() => this.openPage('/expenses')}>
                         <ListItemIcon>
                             <ListIcon />
                         </ListItemIcon>
                         <ListItemText>All Expenses</ListItemText>
                     </ListItem>
                     <Divider />
-                    <ListItem button>
+                    <ListItem button onClick={() => this.openPage('/profile')}>
                         <ListItemIcon>
                             <AccountIcon />
                         </ListItemIcon>
@@ -85,4 +90,4 @@ Drawer.propTypes = {
     onOpen: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, {logout})(Drawer)
+export default withRouter(connect(mapStateToProps, {logout})(Drawer));

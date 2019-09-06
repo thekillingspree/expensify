@@ -1,4 +1,4 @@
-import { GET_EXPENSES } from "../constants";
+import { GET_EXPENSES, ADD_EXPENSE } from "../constants";
 import axios from "../utils/axios";
 
 export const setExpenses = expenses => ({
@@ -13,6 +13,26 @@ export const getExpenses = () => {
             return dispatch(setExpenses(data));
         } catch (error) {
             console.log(error);
+        }
+    }
+}
+
+export const addExpense = expense => ({
+    expense,
+    type: ADD_EXPENSE
+})
+
+export const createExpense = expense => {
+    return async dispatch => {
+        try {
+            const {data} = await axios.post('/expenses/new', expense);
+            dispatch(addExpense(data));
+            return null;
+        } catch (error) {
+            if (error.response) {
+                return error.response.data;
+            }
+            return true;
         }
     }
 }

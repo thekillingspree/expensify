@@ -33,6 +33,7 @@ a {
     position: fixed !important;
     bottom: 0;
     right: 0;
+    z-index: 10;
     margin: 20px !important;
 }
 
@@ -41,13 +42,21 @@ a {
 }
 
 .container {
-    margin-top: 2rem;
+    height: 100%;
+    display: flex;
+    padding-top: 80px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.main {
+    padding-Top: 2rem;
 }
 
 .neg {
-    color: $primary;
+    color: $primary !important;
 }
 
 .pos {
-    color: $success;
+    color: $success !important;
 }
