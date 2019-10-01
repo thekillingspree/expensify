@@ -7,34 +7,42 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppRouter from './routes';
+import { connect } from 'react-redux'
 
-const theme = createMuiTheme({
-	palette: {
-		primary: {
-			main: '#c0392b',
-			light: '#c0392b',
-			dark: '#c0392b',
+const color = store.getState().theme.color;
+console.log('Theme Color', color);
+
+let Layout = ({theme: {color, darkMode}}) => {
+	const theme = createMuiTheme({
+		palette: {
+			primary: {
+				main: color,
+				light: color,
+				dark: color,
+			},
+			type: darkMode ? "dark" : "light"
 		},
-		secondary: {
-			main: '#f1c40f'
-		},
-		type: "light"
-	},
-	typography: {
-		fontFamily: "'Poppins', sans-serif"
-	}
-});
+		typography: {
+			fontFamily: "'Poppins', sans-serif"
+		}
+	});
+	return (
+		<ThemeProvider theme={theme}>
+			<CssBaseline />
+			<PersistGate persistor={persistor}>
+				<AppRouter />
+			</PersistGate>
+		</ThemeProvider>
+	)
+}
+
+Layout = connect(({theme}) => ({theme}))(Layout)
 
 class App extends React.Component {
 	render() {
 		return (
 			<Provider store={store}>
-				<ThemeProvider theme={theme}>
-					<CssBaseline />
-					<PersistGate persistor={persistor}>
-						<AppRouter />
-					</PersistGate>
-				</ThemeProvider>
+				<Layout />
 			</Provider>
 		)
 	}
