@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import { logout } from '../actions/auth';
+import { logout, setDarkMode } from '../actions';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import ListIcon from '@material-ui/icons/List';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PaletteIcon from '@material-ui/icons/Palette';
 import LogoutIcon from '@material-ui/icons/MeetingRoom';
+import DarkIcon from '@material-ui/icons/Brightness2';
+import LightIcon from '@material-ui/icons/Brightness5';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,11 +18,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import styles from '../styles/Drawer.module.scss'
 import LoadingDialog from './LoadingDialog';
+import ThemeDialog from './ThemeDialog';
+import { withTheme } from '@material-ui/styles';
 
 class Drawer extends Component {
 
     state = {
-        loggingOut: false
+        loggingOut: false,
+        theme: false,
     }
 
     openPage = path => {
@@ -28,12 +33,19 @@ class Drawer extends Component {
     }
 
     render() {
-        const {open, onClose, user, onOpen} = this.props;
-        const {loggingOut} = this.state;
+        const {open, onClose, user, onOpen, darkMode, theme: {palette:{ primary: {main}}}} = this.props;
+        const {loggingOut, theme} = this.state;
+        console.log(main)
         return (
             <SwipeableDrawer open={open} onOpen={onOpen} onClose={onClose}>
                 <LoadingDialog open={loggingOut} title="Logging Out"/>
-                <div className={styles.banner}>
+                <ThemeDialog open={theme} handleClose={() => 
+                    {
+                        this.setState({theme: false})
+                        onClose();
+                    }} />
+                <div className={styles.banner}
+                style={{backgroundColor: main}}>
                     <h4 className={styles.username}>{user.name}</h4>
                     <p className={styles.email}>{user.email}</p>
                 </div>
@@ -57,11 +69,19 @@ class Drawer extends Component {
                         </ListItemIcon>
                         <ListItemText>Profile</ListItemText>
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button onClick={() => this.setState({theme: true})}>
                         <ListItemIcon>
                             <PaletteIcon />
                         </ListItemIcon>
                         <ListItemText>Theme</ListItemText>
+                    </ListItem>
+                    <ListItem button onClick={() => {
+                        onClose();
+                        this.props.setDarkMode(!darkMode)}}>
+                        <ListItemIcon>
+                            {darkMode ? <LightIcon /> : <DarkIcon />}
+                        </ListItemIcon>
+                        <ListItemText>{darkMode ? 'Light' : 'Dark'} Mode</ListItemText>
                     </ListItem>
                     <ListItem button onClick={async () => {
                         this.setState({loggingOut: true});
@@ -79,8 +99,9 @@ class Drawer extends Component {
     }
 }
 
-const mapStateToProps = ({user}) => ({
-    user
+const mapStateToProps = ({user, theme}) => ({
+    user,
+    darkMode: theme.darkMode
 });
 
 Drawer.propTypes = {
@@ -90,4 +111,4 @@ Drawer.propTypes = {
     onOpen: PropTypes.func.isRequired
 }
 
-export default withRouter(connect(mapStateToProps, {logout})(Drawer));
+export default withTheme(withRouter(connect(mapStateToProps, {logout, setDarkMode})(Drawer)));

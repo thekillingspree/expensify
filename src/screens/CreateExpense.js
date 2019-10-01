@@ -19,6 +19,12 @@ import { curToSymbol, randomPlaceholder } from '../utils';
 import { createExpense } from '../actions';
 import Snackbar from '../components/Snackbar';
 import LoadingDialog from '../components/LoadingDialog';
+import {
+    MuiPickersUtilsProvider,
+    DatePicker,
+} from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+
 
 class CreateExpense extends Component {
 
@@ -27,6 +33,7 @@ class CreateExpense extends Component {
         value: 0,
         title: '',
         notes: '',
+        date: new Date(),
         loading: false,
         error: {
             name: null,
@@ -42,9 +49,12 @@ class CreateExpense extends Component {
         this.setState({[name]: value});
     }
 
+    onDateChange = date => {
+        this.setState({date});
+    }
 
     handleSubmit = async () => {
-        const {type, value, title, notes} = this.state;
+        const {type, value, title, notes, date} = this.state;
         if (value <= 0) {
             return this.setState({error: {name: 'value', msg: 'Amount must be greater than 0.'}})
         }
@@ -77,7 +87,7 @@ class CreateExpense extends Component {
     }
 
     render() {
-        const {type, value, title, notes, loading, error} = this.state;
+        const {type, value, title, notes, loading, error, date} = this.state;
         const {user} = this.props;
         return (
             <div className={styles.main}>
@@ -140,6 +150,19 @@ class CreateExpense extends Component {
                                 value={title}
                                 />
                                 <FormHelperText>{error.name === 'title' && error.msg}</FormHelperText>
+                        </FormControl>
+                        <FormControl variant="outlined" className={[styles.formControl, styles.dateInput]}>
+                            <MuiPickersUtilsProvider utils={MomentUtils}>
+                                <DatePicker
+                                margin="normal"
+                                id="date-picker-dialog"
+                                inputVariant="outlined"
+                                format="MMMM Do, YYYY"
+                                label={`Date of ${type}`}
+                                onChange={this.onDateChange}
+                                value={date}
+                                />
+                            </MuiPickersUtilsProvider>
                         </FormControl>
                         <TextField
                             multiline
