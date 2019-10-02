@@ -33,9 +33,10 @@ class Drawer extends Component {
     }
 
     render() {
-        const {open, onClose, user, onOpen, darkMode, theme: {palette:{ primary: {main}}}} = this.props;
+        const {open, onClose, user, onOpen, darkMode, theme: {palette:{ primary}}} = this.props;
         const {loggingOut, theme} = this.state;
-        console.log(main)
+        const {main, contrastText} = primary;
+        console.log(primary)
         return (
             <SwipeableDrawer open={open} onOpen={onOpen} onClose={onClose}>
                 <LoadingDialog open={loggingOut} title="Logging Out"/>
@@ -46,8 +47,8 @@ class Drawer extends Component {
                     }} />
                 <div className={styles.banner}
                 style={{backgroundColor: main}}>
-                    <h4 className={styles.username}>{user.name}</h4>
-                    <p className={styles.email}>{user.email}</p>
+                    <h4 style={{color: contrastText}} className={styles.username}>{user.name}</h4>
+                    <p style={{color: contrastText}} className={styles.email}>{user.email}</p>
                 </div>
                 <List style={{width: 250}}>
                     <ListItem button onClick={() => this.openPage('/dashboard')}>
