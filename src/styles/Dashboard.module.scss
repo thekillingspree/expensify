@@ -21,6 +21,13 @@
     box-shadow: 0 2px 6px #f1c40fbf;
 }
 
+.success {
+    composes: info;
+    box-shadow: 0 2px 6px #27ae60cc;
+    color: #fff;
+    background: $success;
+}
+
 .warnMessage {
     flex-grow: 1;
 }

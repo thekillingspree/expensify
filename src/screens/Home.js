@@ -7,15 +7,15 @@ import SimpleDialog from '../components/SimpleDialog';
 class Home extends Component {
 
     state = {
-        verification: false,
+        verification: null,
+        verificationMessage: '',
     }
 
     componentDidMount() {
         let {search} = this.props.location
         search = qs.parse(search, {ignoreQueryPrefix: true});
-        if (search.v) {
-            this.setState({verification: true});
-        }
+        console.log(search.v)
+        this.setState({verification: search.v === 'true', verificationMessage: search.msg});
     }
 
     render() {
@@ -24,8 +24,18 @@ class Home extends Component {
                 <img src={bg} alt="Expenses" className="full-img" />
                 <div className="overlay"></div>
                 <SimpleDialog 
-                open={this.state.verification}
-                title="Successfully Verified Email"
+                open={this.state.verification === true}
+                title="Email Verified."
+                msg={this.state.verificationMessage}
+                onSuccessMessage="Login"
+                onSuccess={() => this.props.history.push('/login')}
+                />
+                <SimpleDialog 
+                open={this.state.verification === false}
+                title="Email Verification failed."
+                msg={this.state.verificationMessage}
+                onSuccessMessage="Login"
+                onSuccess={() => this.props.history.push('/login')}
                 />
                 <nav>
                     <h1>Expense.ly</h1>
