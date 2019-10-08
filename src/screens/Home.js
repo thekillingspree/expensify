@@ -15,7 +15,7 @@ class Home extends Component {
         let {search} = this.props.location
         search = qs.parse(search, {ignoreQueryPrefix: true});
         console.log(search.v)
-        this.setState({verification: search.v === 'true', verificationMessage: search.msg});
+        this.setState({verification: search.v, verificationMessage: search.msg});
     }
 
     render() {
@@ -24,14 +24,14 @@ class Home extends Component {
                 <img src={bg} alt="Expenses" className="full-img" />
                 <div className="overlay"></div>
                 <SimpleDialog 
-                open={this.state.verification === true}
+                open={this.state.verification === 'true'}
                 title="Email Verified."
                 msg={this.state.verificationMessage}
                 onSuccessMessage="Login"
                 onSuccess={() => this.props.history.push('/login')}
                 />
                 <SimpleDialog 
-                open={this.state.verification === false}
+                open={this.state.verification === 'false'}
                 title="Email Verification failed."
                 msg={this.state.verificationMessage}
                 onSuccessMessage="Login"
