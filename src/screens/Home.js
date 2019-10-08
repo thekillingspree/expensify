@@ -1,13 +1,32 @@
 import React, { Component } from 'react';
+import qs from 'qs';
 import '../styles/home.scss';
 import { Link } from 'react-router-dom';
 import bg from '../img/budget.jpg';
+import SimpleDialog from '../components/SimpleDialog';
 class Home extends Component {
+
+    state = {
+        verification: false,
+    }
+
+    componentDidMount() {
+        let {search} = this.props.location
+        search = qs.parse(search, {ignoreQueryPrefix: true});
+        if (search.v) {
+            this.setState({verification: true});
+        }
+    }
+
     render() {
         return (
             <div>
                 <img src={bg} alt="Expenses" className="full-img" />
                 <div className="overlay"></div>
+                <SimpleDialog 
+                open={this.state.verification}
+                title="Successfully Verified Email"
+                />
                 <nav>
                     <h1>Expense.ly</h1>
                     <ul>
