@@ -1,4 +1,4 @@
-import { red, SET_DARK, SET_THEME } from "../constants"
+import { red, SET_DARK, SET_THEME, LOGOUT } from "../constants"
 
 const initialState = {
     darkMode: false,
@@ -12,6 +12,8 @@ export default (state = initialState, action) => {
         return { ...state, darkMode: action.darkMode }
     case SET_THEME:
         return {...state, color: action.color}
+    case LOGOUT:
+        return initialState;
     default:
         return state
     }
