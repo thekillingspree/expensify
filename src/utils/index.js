@@ -54,3 +54,7 @@ export const randomPlaceholder = type => {
     return obj[type][Math.floor(Math.random() * 5)]
 
 }
+
+export const getTimeDescription = ms => {
+    return moment(ms).fromNow();
+}

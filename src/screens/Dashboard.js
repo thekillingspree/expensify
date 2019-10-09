@@ -14,6 +14,7 @@ import { updateProfile, getExpenses } from '../actions';
 import LoadingDialog from '../components/LoadingDialog';
 import Snackbar from '../components/Snackbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import RecentCard from '../components/RecentCard';
 
 class Dashboard extends Component {
 
@@ -45,7 +46,7 @@ class Dashboard extends Component {
             }
         })
         this.setState({loaded: true, income, expense});
-        
+        console.log(this.props.expenses);
     }
 
     async sendMail() {
@@ -114,7 +115,7 @@ class Dashboard extends Component {
                         </div>
                     }
                     
-                    <div className={styles.balanceCard}>
+                    <section className={styles.balanceCard}>
                         <h2>Balance</h2>
                         <h1 className={user.balance >= 0 ? "pos": "neg"}>{displayAmount(user.currency, user.balance)}</h1>
                         <div className={styles.types}>
@@ -127,7 +128,13 @@ class Dashboard extends Component {
                                 <p className="neg">{displayAmount(user.currency, expense)}</p>
                             </div>
                         </div>
-                    </div>
+                    </section>
+                    <section className={styles.recentEntries}>
+                        <h2>Recent Entries</h2>
+                        <p>Your last 5 entries</p>
+                        {this.props.expenses.reverse().slice(0,5).map(exp => <RecentCard expense={exp} currency={user.currency}/>)}
+                        <Button disabled={this.props.expenses.length <= 0} style={{margin: '40px 0'}} variant="outlined" color="primary">View All Expenses</Button>
+                    </section>
                 </Container>}
             </div>
         )
