@@ -24,6 +24,7 @@ import {
     DatePicker,
 } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
+import moment from 'moment';
 
 
 class CreateExpense extends Component {
@@ -33,7 +34,7 @@ class CreateExpense extends Component {
         value: 0,
         title: '',
         notes: '',
-        date: new Date(),
+        date: moment(),
         loading: false,
         error: {
             name: null,
@@ -50,6 +51,7 @@ class CreateExpense extends Component {
     }
 
     onDateChange = date => {
+        console.log(date.valueOf());
         this.setState({date});
     }
 
@@ -68,7 +70,7 @@ class CreateExpense extends Component {
         }
 
         this.setState({loading: true});
-        const error = await this.props.createExpense({type, value, title, notes});
+        const error = await this.props.createExpense({type, value, title, notes, date: date.valueOf()});
         if (error) {
             console.log(error);
             let msg = `There was an error creating the ${type}. Please Try again.`;
