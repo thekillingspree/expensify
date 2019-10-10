@@ -58,3 +58,7 @@ export const randomPlaceholder = type => {
 export const getTimeDescription = ms => {
     return moment(ms).fromNow();
 }
+
+export const toTitleCase = str => {
+    return str[0].toUpperCase() + str.slice(1).toLowerCase();
+}

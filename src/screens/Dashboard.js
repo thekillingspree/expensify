@@ -84,7 +84,7 @@ class Dashboard extends Component {
         result[0].value = income;
         result[1].value = expense;
         return result
-            .map(e => ({...e, value: Math.floor(e.value * (100 / total))}))
+            .map(e => ({...e, value: parseFloat((e.value * (100 / total)).toFixed(2))}))
     }
 
     render() {
