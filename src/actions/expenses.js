@@ -9,7 +9,7 @@ export const setExpenses = expenses => ({
 export const getExpenses = () => {
     return async dispatch => {
         try {
-            const {data} = await axios.get('/expenses/all?sortBy=createdAt:asc');
+            const {data} = await axios.get('/expenses/all?sortBy=updatedAt:desc');
             return dispatch(setExpenses(data));
         } catch (error) {
             console.log(error);

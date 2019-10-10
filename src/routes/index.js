@@ -8,6 +8,7 @@ import PublicRoute from './PublicRoute';
 import Dashboard from '../screens/Dashboard';
 import Login from '../screens/Login';
 import CreateExpense from '../screens/CreateExpense';
+import AllExpenses from '../screens/AllExpenses';
 
 class AppRouter extends Component {
     render() {
@@ -20,6 +21,7 @@ class AppRouter extends Component {
                     <PublicRoute path="/login" component={Login} />
                     <PrivateRoute path="/dashboard" component={Dashboard} />
                     <PrivateRoute path="/create" component={CreateExpense} />
+                    <PrivateRoute path="/expenses" component={AllExpenses} />
                 </Switch>
             </Router>
         );

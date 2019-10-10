@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
+import {PieChart, Pie, Cell, Tooltip as ToolTip, Label} from 'recharts';
 import AppBar from '../components/Appbar';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -15,6 +16,7 @@ import LoadingDialog from '../components/LoadingDialog';
 import Snackbar from '../components/Snackbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import RecentCard from '../components/RecentCard';
+import { success, red } from '../constants';
 
 class Dashboard extends Component {
 
@@ -65,6 +67,26 @@ class Dashboard extends Component {
         this.setState({sendingFailed: false, emailSent: false});
     }
 
+    getSummaryData = () => {
+        let {income, expense} = this.state;
+        let total = income + expense;
+        let result = [
+            {
+                name: 'Income',
+                value: 0
+            },
+            {
+                name: 'Expense',
+                value: 0
+            }
+        ]
+        if (total === 0) return result;
+        result[0].value = income;
+        result[1].value = expense;
+        return result
+            .map(e => ({...e, value: Math.floor(e.value * (100 / total))}))
+    }
+
     render() {
         const {history, user} = this.props;
         const {sendingEmail, 
@@ -75,6 +97,8 @@ class Dashboard extends Component {
             expense,
             created,
             loaded} = this.state;
+        const summary = this.getSummaryData();
+        console.log(summary)
         return (
             <div className="container">
                 <AppBar title="Dashboard" />
@@ -116,23 +140,42 @@ class Dashboard extends Component {
                     }
                     
                     <section className={styles.balanceCard}>
-                        <h2>Balance</h2>
-                        <h1 className={user.balance >= 0 ? "pos": "neg"}>{displayAmount(user.currency, user.balance)}</h1>
-                        <div className={styles.types}>
-                            <div>
-                                <h2>Income</h2>
-                                <p className="pos">{displayAmount(user.currency, income)}</p>
+                        <div>
+                            <h2>Balance</h2>
+                            <h1 className={user.balance >= 0 ? "pos": "neg"}>{displayAmount(user.currency, user.balance)}</h1>
+                            <div className={styles.types}>
+                                <div>
+                                    <h2>Income</h2>
+                                    <p className="pos">{displayAmount(user.currency, income)}</p>
+                                </div>
+                                <div>
+                                    <h2>Expenses</h2>
+                                    <p className="neg">{displayAmount(user.currency, expense)}</p>
+                                </div>
                             </div>
-                            <div>
-                                <h2>Expenses</h2>
-                                <p className="neg">{displayAmount(user.currency, expense)}</p>
-                            </div>
+                        </div>
+                        <div>
+                            <PieChart width={300} height={300}>
+                                <ToolTip />
+                                <Pie 
+                                cx={150}
+                                cy={150}
+                                fill={success}
+                                outerRadius={90}
+                                innerRadius={60}
+                                labelLine={false}
+                                label
+                                data={summary}>
+                                   <Cell stroke={success} key="cell-0" fill={success} />
+                                   <Cell stroke={red} key="cell-1" fill={red} />
+                                </Pie>
+                            </PieChart>
                         </div>
                     </section>
                     <section className={styles.recentEntries}>
                         <h2>Recent Entries</h2>
                         <p>Your last 5 entries</p>
-                        {this.props.expenses.reverse().slice(0,5).map(exp => <RecentCard expense={exp} currency={user.currency}/>)}
+                        {this.props.expenses.slice(0,5).map(exp => <RecentCard expense={exp} currency={user.currency}/>)}
                         <Button disabled={this.props.expenses.length <= 0} style={{margin: '40px 0'}} variant="outlined" color="primary">View All Expenses</Button>
                     </section>
                 </Container>}
