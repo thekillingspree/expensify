@@ -64,12 +64,6 @@ class Drawer extends Component {
                         <ListItemText>All Expenses</ListItemText>
                     </ListItem>
                     <Divider />
-                    <ListItem button onClick={() => this.openPage('/profile')}>
-                        <ListItemIcon>
-                            <AccountIcon />
-                        </ListItemIcon>
-                        <ListItemText>Profile</ListItemText>
-                    </ListItem>
                     <ListItem button onClick={() => this.setState({theme: true})}>
                         <ListItemIcon>
                             <PaletteIcon />

@@ -12,15 +12,15 @@ class AllExpenses extends Component {
                 <Appbar title="All Entries" />
                 <Container className={styles.container}>
                     <h1>Your Entries</h1>
-                    <ExpenseTable expenses={this.props.expenses} />
+                    <ExpenseTable currency={this.props.user.currency} expenses={this.props.expenses} />
                 </Container>
             </article>
         )
     }
 }
 
-const mapStateToProps = ({expenses}) => ({
-    expenses
+const mapStateToProps = ({expenses, user}) => ({
+    expenses, user
 });
 
 const mapDispatchToProps = {
