@@ -1,0 +1,29 @@
+.main {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(306deg, #ff0844, #f29080);
+    background-size: 400% 400%;
+    animation: bgAnim 12s ease infinite;
+    color: #fff !important;
+    h1 {
+        font-size: 10rem;
+        font-weight: bold;
+        margin: 20px 0;
+    }
+
+    h3 {
+        margin: 20px 0;
+        font-weight: normal;
+    }
+}
+
+@keyframes bgAnim {
+    0%{background-position:18% 0%}
+    50%{background-position:83% 100%}
+    100%{background-position:18% 0%}
+}

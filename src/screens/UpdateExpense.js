@@ -35,6 +35,9 @@ class UpdateExpense extends Component {
         super(props);
         console.log(this.props.match.params.id);
         const expense = this.props.expenses.find(e => e._id === this.props.match.params.id);
+        if (!expense) {
+            this.props.history.push('/404')
+        }
         console.log(expense)
         this.state = {
             type: 'expense',

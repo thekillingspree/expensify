@@ -43,8 +43,6 @@ class Home extends Component {
                         <ul>
                             <Link className="li" to="/signup">Signup</Link>
                             <Link className="li" to="/login">Login</Link>
-                            <Link className="li" to="/faq">FAQ</Link>
-                            <Link className="li" to="/About">About</Link>
                         </ul>
                     </div>
                 </nav>
