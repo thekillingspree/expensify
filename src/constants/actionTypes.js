@@ -7,6 +7,7 @@ export const SET_PROFILE = 'SET_PROFILE';
 
 export const GET_EXPENSES = 'GET_EXPENSES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 
 export const SET_DARK = 'SET_DARK';

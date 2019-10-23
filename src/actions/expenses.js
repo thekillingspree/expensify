@@ -1,4 +1,4 @@
-import { GET_EXPENSES, ADD_EXPENSE } from "../constants";
+import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE } from "../constants";
 import axios from "../utils/axios";
 
 export const setExpenses = expenses => ({
@@ -33,6 +33,36 @@ export const createExpense = expense => {
                 return error.response.data;
             }
             return true;
+        }
+    }
+}
+
+export const updateExpense = async (expense, id) => {
+    try {
+        await axios.patch('/expenses/'+id, expense);
+    } catch (error) {
+        if (error.response) {
+            return error.response.data;
+        }
+        return true;
+    }
+}
+
+export const deleteExpenseAction = id => ({
+    type: DELETE_EXPENSE,
+    id
+});
+
+export const deleteExpense = id => {
+    return async dispatch => {
+        try {
+
+            await axios.delete(`/expenses/${id}`);
+            dispatch(deleteExpenseAction(id))
+
+        } catch(e) {
+            console.log(e);
+            return true;                
         }
     }
 }

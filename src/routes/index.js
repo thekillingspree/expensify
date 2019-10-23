@@ -9,11 +9,14 @@ import Dashboard from '../screens/Dashboard';
 import Login from '../screens/Login';
 import CreateExpense from '../screens/CreateExpense';
 import AllExpenses from '../screens/AllExpenses';
+import UpdateExpense from '../screens/UpdateExpense';
+import ScrollHelper from '../components/ScrollHelper';
 
 class AppRouter extends Component {
     render() {
         return (
             <Router>
+                <ScrollHelper>
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/about" component={About} />
@@ -22,7 +25,10 @@ class AppRouter extends Component {
                     <PrivateRoute path="/dashboard" component={Dashboard} />
                     <PrivateRoute path="/create" component={CreateExpense} />
                     <PrivateRoute path="/expenses" component={AllExpenses} />
+                    <PrivateRoute path="/expense/:id" component={UpdateExpense} />
+                    <Route path="*" component={About} />
                 </Switch>
+                </ScrollHelper>
             </Router>
         );
     }

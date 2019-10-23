@@ -7,6 +7,8 @@ export const black = '#000';
 export const sky = '#0abde3';
 export const deepCove = '#130f40';
 export const turbo = '#f9ca24';
+export const mint = '#00b894';
+export const peach = '#f19066';
 
 
 export const themeColors = {
@@ -18,4 +20,6 @@ export const themeColors = {
     sky,
     "Deep Cove": deepCove,
     black,    
+    "Mint Leaf": mint,
+    peach 
 }

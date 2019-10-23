@@ -1,76 +1,64 @@
-import React, { Component } from 'react'
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import React, { Component } from 'react';
+import {withRouter} from 'react-router-dom';
 import moment from 'moment';
 import { toTitleCase, displayAmount } from '../utils';
-import styles from '../styles/AllExpenses.module.scss';
+
 import MaterialTable from 'material-table';
+
 
 class ExpenseTable extends Component {
     render() {
-        let expenses = [...this.props.expenses];
+        let expenses = Array.from(this.props.expenses);
+        console.log(expenses == this.props.expenses, "SAME");
         expenses = expenses.map(expense => {
+            expense = {...expense}
             expense.fDate = moment(expense.date).format('Do MMMM, YYYY');
             expense.type = toTitleCase(expense.type);
-            expense.value = displayAmount(this.props.currency, expense.value);
+            expense.dvalue = displayAmount(this.props.currency, expense.value);
             return expense;
         });
-        // return (
-        //     <div>
-        //         <Paper className={styles.tableRoot}> 
-        //             <Table className={styles.table}>
-        //                 <TableHead>
-        //                     <TableCell className={styles.header}>Title</TableCell>
-        //                     <TableCell className={styles.header}>Amount</TableCell>
-        //                     <TableCell className={styles.header}>Type</TableCell>
-        //                     <TableCell className={styles.header}>Date</TableCell>
-        //                 </TableHead>
-        //                 <TableBody>
-        //                     {
-        //                         expenses.map(expense => (
-        //                             <TableRow key={expense.date}>
-        //                                 <TableCell>{expense.title}</TableCell>
-        //                                 <TableCell>{expense.value}</TableCell>
-        //                                 <TableCell>{toTitleCase(expense.type)}</TableCell>
-        //                                 <TableCell>{moment(expense.date).format('Do MMMM, YYYY')}</TableCell>
-        //                             </TableRow>
-        //                         ))
-        //                     }
-        //                 </TableBody>
-        //             </Table>
-        //         </Paper>
-        //     </div>
-        // )
         return (
             <MaterialTable 
                 style={{marginTop: 20}}
                 title=""
                 columns={[
                     {title: 'Title', field: 'title'},
-                    {title: 'Amount', field: 'value', type: "string", filtering: false, customSort: (a, b) => {
-                        console.log(typeof a);
-                        const valA = parseFloat(a.value.split(" ")[1]);
-                        const valB = parseFloat(b.value.split(" ")[1]);
+                    {title: 'Amount', field: 'dvalue', type: "string", filtering: false, customSort: (a, b) => {
+                        const valA = parseFloat(a.dvalue.split(" ")[1]);
+                        const valB = parseFloat(b.dvalue.split(" ")[1]);
                         return valA - valB
                     }},
                     {title: 'Type', field: 'type', sorting: false, filtering: false},
-                    {title: 'Date', field: 'fDate', customSort: (a,b) => {
+                    {title: 'Date', field: 'fDate', filtering: false, customSort: (a,b) => {
                         const one = moment(a.date);
                         const two = moment(b.date);
                         return one.diff(two);
                     }},
                 ]}
                 data={expenses}
+                actions={[
+                    {
+                        icon: 'delete',
+                        tooltip: 'Delete Entry',
+                        onClick: (event, data) => {
+                            this.props.deleteExpense(data._id);
+                        }
+                    }
+                ]}
+                onRowClick={(event, rowData) => {
+                    this.props.history.push(`/expense/${rowData._id}`)
+                }}
+
                 options  = {{
-                    filtering: true
+                    filtering: true,
+                    exportButton: true,
+                    exportFileName: `expensify-report-${moment().format('DD/MM/YYYY')}`,
+                    pageSize: 20,
+                    actionsColumnIndex: -1
                 }}
             />
         )
     }
 }
 
-export default ExpenseTable
+export default withRouter(ExpenseTable)

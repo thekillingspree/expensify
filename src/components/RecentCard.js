@@ -1,14 +1,15 @@
 import React from 'react';
 import moment from 'moment';
+import {withRouter} from 'react-router-dom';
 import styles from '../styles/RecentCard.module.scss';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { getTimeDescription, displayAmount } from '../utils';
 
-const RecentCard = ({expense, currency}) => {
+const RecentCard = ({expense, currency, history}) => {
     const {title, type, notes, updatedAt, value, date} = expense;
     const amt = displayAmount(currency, value);
     return (
-        <section className={styles[type]}>
+        <section onClick={() => history.push(`/expense/${expense._id}`)} className={styles[type]}>
             <div className={styles.details}>
                 <h2 className={title.length > 15 && styles.smallH2}>{title}</h2>
                 <div className={styles.date}>
@@ -24,4 +25,4 @@ const RecentCard = ({expense, currency}) => {
     )
 }
 
-export default RecentCard
+export default withRouter(RecentCard)

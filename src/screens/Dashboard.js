@@ -176,7 +176,9 @@ class Dashboard extends Component {
                         <h2>Recent Entries</h2>
                         <p>Your last 5 entries</p>
                         {this.props.expenses.slice(0,5).map(exp => <RecentCard expense={exp} currency={user.currency}/>)}
-                        <Button disabled={this.props.expenses.length <= 0} style={{margin: '40px 0'}} variant="outlined" color="primary">View All Expenses</Button>
+                        <Button disabled={this.props.expenses.length <= 0} style={{margin: '40px 0'}} variant="outlined" color="primary" onClick={() => {
+                            history.push('/expenses')
+                        }}>View All Expenses</Button>
                     </section>
                 </Container>}
             </div>
