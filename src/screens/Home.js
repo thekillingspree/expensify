@@ -38,7 +38,7 @@ class Home extends Component {
                 onSuccess={() => this.props.history.push('/login')}
                 />
                 <nav>
-                    <h1>Expense.ly</h1>
+                    <h1>Expensify</h1>
                     <div className="hamburger">
                         <ul>
                             <Link className="li" to="/signup">Signup</Link>
@@ -47,7 +47,7 @@ class Home extends Component {
                     </div>
                 </nav>
                 <div className="hero">
-                    <h1>Expense.ly</h1>
+                    <h1>Expensify</h1>
                     <p>Track your daily expenses.</p>
                     <Link className="btn" to="/signup">Get Started</Link>
                 </div>
